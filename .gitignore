@@ -1,0 +1,8 @@
+# Secrets and runtime state
+config.json
+
+# Compiled binary
+cittadinanza-bot
+
+# macOS
+.DS_Store

@@ -1,0 +1,20 @@
+{
+  "telegram_token": "",
+  "telegram_chat_id": "",
+  
+  "email_enabled": true,
+  "email_sender": "your.email@gmail.com",
+  "email_app_password": "abcd efgh ijkl mnop",
+  "email_recipient": "your.email@gmail.com",
+
+  "target_url": "https://conscordoba.esteri.it/es/news/",
+  "check_interval_minutes": 480,
+  "db_path": "bot.db",
+  "keywords": [
+    "turnos",
+    "cittadinanza",
+    "prenotazioni",
+    "apertura",
+    "ciudadania"
+  ]
+}
