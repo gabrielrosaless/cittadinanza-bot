@@ -111,9 +111,6 @@ func (c *Config) validate() error {
 	if c.TargetURL == "" {
 		return fmt.Errorf("target_url is required")
 	}
-	if c.CheckIntervalMinutes <= 0 {
-		return fmt.Errorf("check_interval_minutes must be greater than 0")
-	}
 	if c.DBPath == "" {
 		c.DBPath = "bot.db"
 	}
