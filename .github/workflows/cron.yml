@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -41,5 +44,21 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add bot.db
+          
           # Only commit and push if bot.db actually has differences
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: persist new articles in bot.db" && git push)
+          if ! git diff --quiet || ! git diff --staged --quiet; then
+            git commit -m "chore: persist new articles in bot.db"
+            
+            # Try pushing. If it fails, pull & rebase, resolving any binary conflict on bot.db automatically.
+            if ! git push; then
+              echo "Push failed. Attempting to pull and rebase..."
+              if ! git pull --rebase origin main; then
+                echo "Conflict detected during rebase. Resolving conflict on bot.db by keeping the local version..."
+                git checkout --theirs -- bot.db
+                git add bot.db
+                git rebase --continue
+              fi
+              echo "Pushing after rebase..."
+              git push
+            fi
+          fi
